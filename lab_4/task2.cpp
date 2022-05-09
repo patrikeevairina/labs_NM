@@ -106,10 +106,11 @@ int main()
 		{
 			y[j].push_back(y[j+1][i - 1] - y[j][i - 1]);
 		}
+		
 		//cout << endl;
 	}
-	
-	for(size_t i = 1; i < LENGTH; ++i)
+
+	/*for(size_t i = 0; i < LENGTH; ++i)
 	{
 		cout << x[i] << '\t';
 		for(size_t j = 0; j < LENGTH - i; ++j)
@@ -117,6 +118,12 @@ int main()
 			cout << y[i][j] << '\t';
 		}
 		cout << endl;
+	}
+	*/
+	cout << "x\ty\n";
+	for(size_t i = 0; i < LENGTH; ++i)
+	{
+		cout << x[i] << '\t' << y[i][0] << endl;
 	}
 	
 	double arg_Gauss = 1.60 + 0.006 * VARIANT;
