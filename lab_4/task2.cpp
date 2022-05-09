@@ -91,7 +91,6 @@ double stirlingF(vector<vector<double>> y, vector<double> x, double point)
 
 double besselF(vector<vector<double>> y, vector<double> x, double point)
 {
-	//int k = (LENGTH % 2) ? LENGTH / 2 : LENGTH / 2 - 1;
 	int align = LENGTH / 2;
 	double u = (point - x[align]) / (x[1] - x[0]);
 	double sum = (y[align][0] + y[align + 1][0]) / 2;
@@ -102,7 +101,7 @@ double besselF(vector<vector<double>> y, vector<double> x, double point)
 		else
 		{
 			sum += _u(u, i) * (y[align][i] + y[align - 1][i]) / (factorial(i) * 2);
-		align--;
+			align--;
 		}
 	}
 	
@@ -169,5 +168,4 @@ int main()
 	double arg_Bessel = 1.83 + 0.003 * VARIANT;
 	cout << "Bessel: " << arg_Bessel << " " << fixed << besselF(y, x, arg_Bessel) << endl;
 	return 0;
-
 }
