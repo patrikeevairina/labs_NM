@@ -7,7 +7,7 @@
 
 using namespace std;
 
-double _p(double p, int n)
+double _p(double p, int n) // for Gauss
 {
 	auto buf = p; 
 	for(size_t i = 1; i < n; ++i)
@@ -16,6 +16,21 @@ double _p(double p, int n)
 			buf * (p - i);
 		else
 			buf * (p + i);
+	}
+	return buf;
+}
+
+double _u(double u, int n)
+{
+	if(!n) return 1;
+	double buf = u;
+	for(size_t i = 1; i <= n / 2; ++i)
+	{
+		buf *= u - i;
+	}
+	for(size_t i = 0; i < n / 2; ++i)
+	{
+		buf *= u + i;
 	}
 	return buf;
 }
@@ -74,6 +89,27 @@ double stirlingF(vector<vector<double>> y, vector<double> x, double point)
 	return y_p;
 }
 
+double besselF(vector<vector<double>> y, vector<double> x, double point)
+{
+	//int k = (LENGTH % 2) ? LENGTH / 2 : LENGTH / 2 - 1;
+	int align = LENGTH / 2;
+	double u = (point - x[align]) / (x[1] - x[0]);
+	double sum = (y[align][0] + y[align + 1][0]) / 2;
+	for(size_t i = 1; i < LENGTH; ++i)
+	{	
+		if(i % 2)
+			sum += (u - 0.5) * _u(u, i - 1) * y[align][i] / factorial(i);
+		else
+		{
+			sum += _u(u, i) * (y[align][i] + y[align - 1][i]) / (factorial(i) * 2);
+		align--;
+		}
+	}
+	
+	return sum;
+}
+
+
 int main()
 {
 	std::vector<double> x;
@@ -131,7 +167,7 @@ int main()
 	double arg_Stirling = 1.725 + 0.002 * VARIANT;
 	cout << "Stirling: " << arg_Stirling << " " << fixed << stirlingF(y, x, arg_Stirling) << endl;
 	double arg_Bessel = 1.83 + 0.003 * VARIANT;
-
+	cout << "Bessel: " << arg_Bessel << " " << fixed << besselF(y, x, arg_Bessel) << endl;
 	return 0;
 
 }
